@@ -1,10 +1,12 @@
 package com.levent_j.learnremoteviews;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(this);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             .setTicker("有消息了!")
                             .setContentTitle("标题")
                             .setContentText("内容")
-                            .setContentIntent(pendingIntent)
+                            .setFullScreenIntent(pendingIntent,true)//直接进入activity2
+//                            .setContentIntent(pendingIntent)
                             .setNumber(1)
                             .build();
                 }
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 RemoteViews contentView = new RemoteViews(getPackageName(),R.layout.notify);
                 contentView.setTextViewText(R.id.text_context,"show");
                 notification.contentView=contentView;
+//
+//                RemoteViews expandleView =new RemoteViews(getPackageName(),R.layout.notify_expandle);
+//                notification.bigContentView=expandleView;
 
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify(1,notification);
