@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -39,6 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             .build();
                 }
                 notification.flags=Notification.FLAG_AUTO_CANCEL;
+
+                RemoteViews contentView = new RemoteViews(getPackageName(),R.layout.notify);
+                contentView.setTextViewText(R.id.text_context,"show");
+                notification.contentView=contentView;
+
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify(1,notification);
 
